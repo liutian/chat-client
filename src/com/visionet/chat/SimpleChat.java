@@ -9,21 +9,21 @@ import javax.swing.*;
 import java.sql.*;
 
 
-/* =======================µÇÂ½Ãæ°å======================== */
+/* =======================ç™»é™†é¢æ¿======================== */
 public class SimpleChat extends JFrame {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	JTextField jtf=new JTextField();
-	JButton jb=new JButton("È·¶¨");
-	Label l=new Label("êÇ³Æ£º");
+	JButton jb=new JButton("ç¡®å®š");
+	Label l=new Label("æ˜µç§°ï¼š");
 	Label l2=new Label();
 	String name="";
 	DatagramSocket dgs=null;
 	DatagramSocket dgs2=null;
 	/*
-	 * ³ÌĞòÈë¿Ú
+	 * ç¨‹åºå…¥å£
 	 */
 	public static void main(String[] ag) {
 		SimpleChat lp=new SimpleChat();
@@ -32,16 +32,16 @@ public class SimpleChat extends JFrame {
 	
 	public void launch(){
 		/*
-		 * »æÖÆµÇÂ¼´°Ìå
+		 * ç»˜åˆ¶ç™»å½•çª—ä½“
 		 */
 		this.addWindowListener(new LogClose());
-		this.setTitle("µØÆ½ÏßÁÄÌìµÇÂ¼´°¿Ú");
+		this.setTitle("åœ°å¹³çº¿èŠå¤©ç™»å½•çª—å£");
 		LogMouseAdapter lma=new LogMouseAdapter(this);
 		this.setBounds(200, 100, 300, 150);
 		this.setLayout(null);
 		l.setBounds(75,23,40,30);
 		l2.setBounds(220, 25, 80, 30);
-		l.setFont(new Font("¿¬Ìå",Font.PLAIN,17));
+		l.setFont(new Font("æ¥·ä½“",Font.PLAIN,17));
 		jtf.setBounds(120,25,100,25);
 		jb.setBounds(110,70 ,80,25);
 		jb.addMouseListener(lma);
@@ -52,7 +52,7 @@ public class SimpleChat extends JFrame {
 		this.setVisible(true);
 	}
 	/*
-	 * µÇÂ¼°´Å¥¼àÌıÀà
+	 * ç™»å½•æŒ‰é’®ç›‘å¬ç±»
 	 */
 	class  LogMouseAdapter extends MouseAdapter{
 		JFrame jf=new JFrame();
@@ -61,7 +61,7 @@ public class SimpleChat extends JFrame {
 		byte []buf=new byte[1024];
 		DatagramPacket dgp=null;
 		/*
-		 * ×¢²á°´Å¥µÄ¼àÌıÆ÷
+		 * æ³¨å†ŒæŒ‰é’®çš„ç›‘å¬å™¨
 		 */
 		LogMouseAdapter(JFrame jf){
 			this.jf=jf;
@@ -72,27 +72,27 @@ public class SimpleChat extends JFrame {
 				int end=InetAddress.getLocalHost().toString().lastIndexOf(".");
 				id=InetAddress.getLocalHost().toString().substring(start+1, end+1);
 			}catch(UnknownHostException uhe){
-				System.out.println("½ØÈ¡±¾µØµØÖ·Ê§°Ü");
+				System.out.println("æˆªå–æœ¬åœ°åœ°å€å¤±è´¥");
 				uhe.printStackTrace();
 			}
 		}
 		/*
-		 * Êó±ê¼àÌıÆ÷
+		 * é¼ æ ‡ç›‘å¬å™¨
 		 */
 		public void mousePressed(MouseEvent ae) {
 			name=jtf.getText().trim();		
 			if(name.length()<2){
-				l2.setText("êÇ³Æ¹ı¶Ì");
+				l2.setText("æ˜µç§°è¿‡çŸ­");
 			}else if(name.length()>7){
-				l2.setText("êÇ³Æ¹ı³¤");
-			}else if(name.indexOf("#")!=-1||name.indexOf("ÈºÏûÏ¢")!=-1
-			||name.indexOf("*")!=-1||name.indexOf("¹ÜÀíÔ±")!=-1){
-				l2.setText("êÇ³Æ·Ç·¨");
+				l2.setText("æ˜µç§°è¿‡é•¿");
+			}else if(name.indexOf("#")!=-1||name.indexOf("ç¾¤æ¶ˆæ¯")!=-1
+			||name.indexOf("*")!=-1||name.indexOf("ç®¡ç†å‘˜")!=-1){
+				l2.setText("æ˜µç§°éæ³•");
 			}else {
-				jf.setTitle("µÇÂ½ÖĞ...");
+				jf.setTitle("ç™»é™†ä¸­...");
 				jf.setEnabled(false);
 				/*
-				 * Æô¶¯Ïß³ÌÀ´½ÓÊÕ·şÎñÆ÷·¢À´µÄµØÖ·
+				 * å¯åŠ¨çº¿ç¨‹æ¥æ¥æ”¶æœåŠ¡å™¨å‘æ¥çš„åœ°å€
 				 */
 				CheckThread ct=new CheckThread(jf);
 				FirstReceive ft=new FirstReceive();
@@ -101,12 +101,12 @@ public class SimpleChat extends JFrame {
 				ft.start();
 				ct.start();
 				/*
-				 * Ïò¾ÖÓòÍø·¢ËÍÊı¾İ
+				 * å‘å±€åŸŸç½‘å‘é€æ•°æ®
 				 */
 				try{
 					buf=(name+"/"+InetAddress.getLocalHost().toString()).getBytes();
 				}catch(UnknownHostException uhe){
-					System.out.println("»ñÈ¡±¾µØµØÖ·Ê§°Ü");
+					System.out.println("è·å–æœ¬åœ°åœ°å€å¤±è´¥");
 					uhe.printStackTrace();
 				}
 				
@@ -121,7 +121,7 @@ public class SimpleChat extends JFrame {
 						dgp=new DatagramPacket(buf,buf.length,new InetSocketAddress(id+i,3000));
 						dgs.send(dgp);
 					}catch(IOException ie){
-						System.out.println("·¢ËÍÊı¾İ°üÊ§°Ü");
+						System.out.println("å‘é€æ•°æ®åŒ…å¤±è´¥");
 						System.out.println(id+i);
 						ie.printStackTrace();
 					}
@@ -131,7 +131,7 @@ public class SimpleChat extends JFrame {
 		}
 	}
 	/*
-	 *¼ÆÊ±Æ÷
+	 *è®¡æ—¶å™¨
 	 */
 	class CheckThread extends Thread{
 		JFrame jf=null;
@@ -149,7 +149,7 @@ public class SimpleChat extends JFrame {
 			try {
 				this.sleep(5000);
 			} catch (InterruptedException e) {
-				System.out.println("Ïß³Ì±»´ò¶Ï");
+				System.out.println("çº¿ç¨‹è¢«æ‰“æ–­");
 				e.printStackTrace();
 				return;
 			}
@@ -162,15 +162,15 @@ public class SimpleChat extends JFrame {
 		}
 	}
 	/*
-	 * ½ÓÊÕ·şÎñÆ÷ĞÅÏ¢
+	 * æ¥æ”¶æœåŠ¡å™¨ä¿¡æ¯
 	 */
 	class FirstReceive extends Thread{
 		byte [] buf=new byte[1024];
 		DatagramPacket dgp=new DatagramPacket(buf,buf.length);
-		String serverId="";//·şÎñÆ÷·¢À´µÄµØÖ·
+		String serverId="";//æœåŠ¡å™¨å‘æ¥çš„åœ°å€
 		JFrame jf=null;
-		boolean bool=true;//ÅĞ¶Ï»ñÈ¡µÄ·şÎñÆ÷µØÖ·ÊÇ·ñÕıÈ·
-		String serid="";//³ÌĞò½âÎöºóµÄ·şÎñÆ÷µØÖ·
+		boolean bool=true;//åˆ¤æ–­è·å–çš„æœåŠ¡å™¨åœ°å€æ˜¯å¦æ­£ç¡®
+		String serid="";//ç¨‹åºè§£æåçš„æœåŠ¡å™¨åœ°å€
 		Thread t=null;
 		JTextField jtf=null;
 		
@@ -185,7 +185,7 @@ public class SimpleChat extends JFrame {
 			try{
 				dgs2=new DatagramSocket(2020);
 			}catch(IOException ie){
-				System.out.println("¶Ë¿Ú¿ªÆôÊ§°Ü");
+				System.out.println("ç«¯å£å¼€å¯å¤±è´¥");
 				ie.printStackTrace();
 			}
 			
@@ -193,17 +193,17 @@ public class SimpleChat extends JFrame {
 				dgs2.receive(dgp);
 				serverId=new String(buf,0,dgp.getLength());
 			}catch(IOException ie){
-				System.out.println("·şÎñÆ÷µØÖ·½âÎöÊ§°Ü");
+				System.out.println("æœåŠ¡å™¨åœ°å€è§£æå¤±è´¥");
 				ie.printStackTrace();
-				l2.setText("ÍøÂçÁ¬½ÓÓĞÎó");
+				l2.setText("ç½‘ç»œè¿æ¥æœ‰è¯¯");
 			}
 			
 			if(serverId.equalsIgnoreCase("#repeat:")){
 				jf.setEnabled(true);////////////////////////////////////////////////////////////////////
 				t.interrupt();
-				l2.setText("êÇ³ÆÖØ¸´");
+				l2.setText("æ˜µç§°é‡å¤");
 			}else if(serverId.equals("")){
-				l2.setText("½ÓÊÕĞÅÏ¢´íÎó");
+				l2.setText("æ¥æ”¶ä¿¡æ¯é”™è¯¯");
 			}else{
 				t.interrupt();///////////////////////////////////////////////////////////////////
 				jf.setEnabled(false);
@@ -224,44 +224,44 @@ public class SimpleChat extends JFrame {
 	}
 }
 
-/* ================Ö÷Ãæ°å================= */
+/* ================ä¸»é¢æ¿================= */
 class Pane extends JFrame implements ActionListener, Runnable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	String serverId="";//´æ´¢·şÎñÆ÷µØÖ·
-	String name="";//´æ´¢êÇ³Æ
+	String serverId="";//å­˜å‚¨æœåŠ¡å™¨åœ°å€
+	String name="";//å­˜å‚¨æ˜µç§°
 	HashMap<String ,StringBuffer> lists=new HashMap<String,StringBuffer>();
 	ArrayList<String> arrName=new ArrayList<String>(); 
 	
 	Socket s = null;
 	DataOutputStream dos=null;
 	DataInputStream dis=null;
-	String now_chatObject="¹ÜÀíÔ±ÏûÏ¢";
+	String now_chatObject="ç®¡ç†å‘˜æ¶ˆæ¯";
 	Time now_Time=null;
 	
-	JTextPane text1 = new JTextPane();   //ÁÄÌìÏÔÊ¾¿ò
-	JTextPane text2 = new JTextPane();   //ÁÄÌìÊäÈë¿ò
-	JScrollPane sc1 = new JScrollPane(text1, 22, 32);//ÁÄÌìÏÔÊ¾¿òÈİÆ÷
-	JScrollPane sc2 = new JScrollPane(text2, 22, 32);//ÁÄÌìÊäÈë¿òÈİÆ÷
+	JTextPane text1 = new JTextPane();   //èŠå¤©æ˜¾ç¤ºæ¡†
+	JTextPane text2 = new JTextPane();   //èŠå¤©è¾“å…¥æ¡†
+	JScrollPane sc1 = new JScrollPane(text1, 22, 32);//èŠå¤©æ˜¾ç¤ºæ¡†å®¹å™¨
+	JScrollPane sc2 = new JScrollPane(text2, 22, 32);//èŠå¤©è¾“å…¥æ¡†å®¹å™¨
 	
-	JComboBox cb1 = null;//×ÖÌåÀàĞÍ
-	JComboBox cb2 = new JComboBox(new String[] { "³£¹æ", "´ÖÌå", "Ğ±Ìå", "´ÖĞ±Ìå" });
-	JComboBox cb3 = new JComboBox();//×ÖÌå´óĞ¡
+	JComboBox cb1 = null;//å­—ä½“ç±»å‹
+	JComboBox cb2 = new JComboBox(new String[] { "å¸¸è§„", "ç²—ä½“", "æ–œä½“", "ç²—æ–œä½“" });
+	JComboBox cb3 = new JComboBox();//å­—ä½“å¤§å°
 	
 	DefaultListModel listmod = new DefaultListModel();
-	JList jlist = new JList(listmod);//ºÃÓÑÁĞ±í¿ò
-	JScrollPane sc3 = new JScrollPane(jlist, 22, 32);//ºÃÓÑÁĞ±í¿ò
+	JList jlist = new JList(listmod);//å¥½å‹åˆ—è¡¨æ¡†
+	JScrollPane sc3 = new JScrollPane(jlist, 22, 32);//å¥½å‹åˆ—è¡¨æ¡†
 	
-	JButton btn1 = new JButton("·¢ËÍ");
-	JButton btn2 = new JButton("´«Êä");
-	JButton btn3 = new JButton("ÏÂÔØ");
-	JSplitPane sp0= new JSplitPane(0);//ÉÏÁĞ
-	JSplitPane sp1= new JSplitPane(1);//ÓÒÁĞ
-	JSplitPane sp2= new JSplitPane(0);//ÏÂÁĞ
+	JButton btn1 = new JButton("å‘é€");
+	JButton btn2 = new JButton("ä¼ è¾“");
+	JButton btn3 = new JButton("ä¸‹è½½");
+	JSplitPane sp0= new JSplitPane(0);//ä¸Šåˆ—
+	JSplitPane sp1= new JSplitPane(1);//å³åˆ—
+	JSplitPane sp2= new JSplitPane(0);//ä¸‹åˆ—
 	
-	Font font = new Font("ËÎÌå", 1, 12);
+	Font font = new Font("å®‹ä½“", 1, 12);
 	Font[] font_array;
 	String[] font_name;
 	
@@ -269,7 +269,7 @@ class Pane extends JFrame implements ActionListener, Runnable {
 	int transPort=20000;
 	HashMap<String,TransPane> arrTransPane=new HashMap<String,TransPane>();
 
-	/* =================Ö÷Ãæ°å¹¹Ôì·½·¨================= */
+	/* =================ä¸»é¢æ¿æ„é€ æ–¹æ³•================= */
 
 	Pane(String id, String name) {
 		this.serverId=id;
@@ -282,22 +282,22 @@ class Pane extends JFrame implements ActionListener, Runnable {
 		}
 		clientId=clientId.substring(clientId.lastIndexOf("/")+1);
 		
-		arrName.add("ÈºÏûÏ¢");
-		arrName.add("¹ÜÀíÔ±ÏûÏ¢");
-		listmod.add(this.listmod.size(), "ÈºÏûÏ¢");
-		listmod.add(this.listmod.size(),"¹ÜÀíÔ±ÏûÏ¢");
+		arrName.add("ç¾¤æ¶ˆæ¯");
+		arrName.add("ç®¡ç†å‘˜æ¶ˆæ¯");
+		listmod.add(this.listmod.size(), "ç¾¤æ¶ˆæ¯");
+		listmod.add(this.listmod.size(),"ç®¡ç†å‘˜æ¶ˆæ¯");
 		
 		launch();
 		/*
-		 * Æô¶¯Ïß³Ì
+		 * å¯åŠ¨çº¿ç¨‹
 		 */
 		Thread client_thread = new Thread(this);
 		client_thread.start();
 		/*
-		 * »æÖÆÃæ°å
+		 * ç»˜åˆ¶é¢æ¿
 		 */
 		setBounds(100, 200, 500, 500);
-		setTitle("»¶Ó­Äú:" + name);
+		setTitle("æ¬¢è¿æ‚¨:" + name);
 		GraphicsEnvironment fm = GraphicsEnvironment
 				.getLocalGraphicsEnvironment();
 		font_name = fm.getAvailableFontFamilyNames();
@@ -320,9 +320,9 @@ class Pane extends JFrame implements ActionListener, Runnable {
 		
 		getContentPane().setBackground(new Color(131, 172, 113));
 		JPanel pan2 = new JPanel(new GridLayout(1, 6));
-		pan2.add(btn1);//·¢ËÍ
-		pan2.add(btn2);//±íÇé
-		pan2.add(btn3);//´ı¶¨
+		pan2.add(btn1);//å‘é€
+		pan2.add(btn2);//è¡¨æƒ…
+		pan2.add(btn3);//å¾…å®š
 		pan2.add(cb1);
 		pan2.add(cb2);
 		pan2.add(cb3);
@@ -342,21 +342,21 @@ class Pane extends JFrame implements ActionListener, Runnable {
 		sp0.setOneTouchExpandable(true);
 		sp1.setOneTouchExpandable(true);
 		jlist.addMouseListener(new JListMouseAdapter(this));
-		lists.put("ÈºÏûÏ¢", new StringBuffer(""));
-		lists.put("¹ÜÀíÔ±ÏûÏ¢", new StringBuffer("»¶Ó­ÄúÊ¹ÓÃµØÆ½ÏßÁÄÌìÈí¼ş£¡×÷Õß£ºÉÁ¿ÍÏÀ"));
-		text1.setText("»¶Ó­ÄúÊ¹ÓÃµØÆ½ÏßÁÄÌìÈí¼ş£¡×÷Õß£ºÉÁ¿ÍÏÀ");
+		lists.put("ç¾¤æ¶ˆæ¯", new StringBuffer(""));
+		lists.put("ç®¡ç†å‘˜æ¶ˆæ¯", new StringBuffer("æ¬¢è¿æ‚¨ä½¿ç”¨åœ°å¹³çº¿èŠå¤©è½¯ä»¶ï¼ä½œè€…ï¼šé—ªå®¢ä¾ "));
+		text1.setText("æ¬¢è¿æ‚¨ä½¿ç”¨åœ°å¹³çº¿èŠå¤©è½¯ä»¶ï¼ä½œè€…ï¼šé—ªå®¢ä¾ ");
 		
 		addWindowListener(new PaneWindowAdapter());
 	}
 	/*
-	 * Á¬½Ó·şÎñÆ÷
+	 * è¿æ¥æœåŠ¡å™¨
 	 */
 	public void launch(){
 		try{
 System.out.println(serverId);
 			s=new Socket(serverId,3333);
 		}catch(IOException ie){
-			System.out.println("¶Ë¿Ú¿ªÆôÊ§°Ü");
+			System.out.println("ç«¯å£å¼€å¯å¤±è´¥");
 			ie.printStackTrace();
 			System.exit(0);
 		}
@@ -375,7 +375,7 @@ System.out.println(serverId);
 		}
 	}
 	/*
-	 * ½ÓÊÕÏûÏ¢
+	 * æ¥æ”¶æ¶ˆæ¯
 	 */
 	public void run() {
 		String ins="";
@@ -416,7 +416,7 @@ System.out.println(serverId);
 				name=ins.substring(6, no);
 				str=ins.substring(no+1);
 				
-				lists.get(name).append("\n\n"+name+"¶ÔÄãËµ£º"+str);
+				lists.get(name).append("\n\n"+name+"å¯¹ä½ è¯´ï¼š"+str);
 				
 				if(now_chatObject.equals(name)){
 					text1.setText(lists.get(name).toString());
@@ -433,20 +433,20 @@ System.out.println(serverId);
 				name=ins.substring(7, no);
 				str=ins.substring(no+1);
 				
-				lists.get("ÈºÏûÏ¢").append("\n\n"+name+"Ëµ£º"+str);
+				lists.get("ç¾¤æ¶ˆæ¯").append("\n\n"+name+"è¯´ï¼š"+str);
 				
-				if(now_chatObject.equals("ÈºÏûÏ¢")){
-					text1.setText(lists.get("ÈºÏûÏ¢").toString());
+				if(now_chatObject.equals("ç¾¤æ¶ˆæ¯")){
+					text1.setText(lists.get("ç¾¤æ¶ˆæ¯").toString());
 				}
 			}
 			
 			if(ins.indexOf("#server:")!=-1){
 				str=ins.substring(8);
-				lists.get("¹ÜÀíÔ±ÏûÏ¢").append("\n\n¹ÜÀíÔ±£º"+str);
+				lists.get("ç®¡ç†å‘˜æ¶ˆæ¯").append("\n\nç®¡ç†å‘˜ï¼š"+str);
 				
-				now_chatObject="¹ÜÀíÔ±ÏûÏ¢";
-				this.setTitle("²é¿´¹ÜÀíÔ±ÏûÏ¢");
-				text1.setText(lists.get("¹ÜÀíÔ±ÏûÏ¢").toString());
+				now_chatObject="ç®¡ç†å‘˜æ¶ˆæ¯";
+				this.setTitle("æŸ¥çœ‹ç®¡ç†å‘˜æ¶ˆæ¯");
+				text1.setText(lists.get("ç®¡ç†å‘˜æ¶ˆæ¯").toString());
 			}
 			
 			if(ins.indexOf("#serverClosed:")!=-1){
@@ -456,15 +456,15 @@ System.out.println(serverId);
 			if(ins.indexOf("#trans:")!=-1){
 				name=ins.substring(7,ins.lastIndexOf("#"));
 				int len=Integer.parseInt(ins.substring(ins.lastIndexOf("#")+1));
-				TransPane tp=new TransPane(" ¡û "+name);
-				tp.transClientPane(name+"·¢À´ÎÄ¼ş´«ÊäÇëÇó","½ÓÊÜ","¾Ü¾ø","¿Í»§¶Ë",len);
+				TransPane tp=new TransPane(" â† "+name);
+				tp.transClientPane(name+"å‘æ¥æ–‡ä»¶ä¼ è¾“è¯·æ±‚","æ¥å—","æ‹’ç»","å®¢æˆ·ç«¯",len);
 			}
 			
 			if(ins.indexOf("#transId:")!=-1){
 				name=ins.substring(9,ins.indexOf("#",9));
 				Id=ins.substring(ins.indexOf("#",9)+1,ins.lastIndexOf("#"));
 				port=ins.substring(ins.lastIndexOf("#")+1);
-System.out.println("·şÎñÆ÷¶Ë½ÓÊÕµ½µÄ¶Ë¿ÚºÅÎª"+port);
+System.out.println("æœåŠ¡å™¨ç«¯æ¥æ”¶åˆ°çš„ç«¯å£å·ä¸º"+port);
 				
 				if(arrTransPane.containsKey(name)){
 					arrTransPane.get(name).startupTrans(Id, port);
@@ -473,7 +473,7 @@ System.out.println("·şÎñÆ÷¶Ë½ÓÊÕµ½µÄ¶Ë¿ÚºÅÎª"+port);
 		}
 	}
 	/*
-	 * ·¢ËÍÏûÏ¢
+	 * å‘é€æ¶ˆæ¯
 	 */
 	public void send(String ins) {
 		try {
@@ -483,33 +483,33 @@ System.out.println("·şÎñÆ÷¶Ë½ÓÊÕµ½µÄ¶Ë¿ÚºÅÎª"+port);
 		}
 	}
 	/*
-	 *Ö÷Ãæ°å×é¼şµÄÊÂ¼ş¼àÌıÆ÷ 
+	 *ä¸»é¢æ¿ç»„ä»¶çš„äº‹ä»¶ç›‘å¬å™¨ 
 	 */
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
-		if (o == btn1) {//·¢ËÍ°´Å¥
+		if (o == btn1) {//å‘é€æŒ‰é’®
 			now_Time=new Time(System.currentTimeMillis());
-			if(now_chatObject.equals("ÈºÏûÏ¢")){
-				lists.get("ÈºÏûÏ¢").append("\n\n"+"ÄãËµ£º"+text2.getText()+"  "+now_Time.toString());
+			if(now_chatObject.equals("ç¾¤æ¶ˆæ¯")){
+				lists.get("ç¾¤æ¶ˆæ¯").append("\n\n"+"ä½ è¯´ï¼š"+text2.getText()+"  "+now_Time.toString());
 				text1.setText(lists.get(now_chatObject).toString());
 				send("#group:"+text2.getText()+"  "+now_Time.toString());
 				text2.setText("");
 			}
-			else if(now_chatObject.equalsIgnoreCase("¹ÜÀíÔ±ÏûÏ¢")){
+			else if(now_chatObject.equalsIgnoreCase("ç®¡ç†å‘˜æ¶ˆæ¯")){
 				
 			}
 			else{
-				lists.get(now_chatObject).append("\n\n"+"Äã¶Ô"+now_chatObject+"Ëµ£º"+text2.getText()+"  "+now_Time.toString());
+				lists.get(now_chatObject).append("\n\n"+"ä½ å¯¹"+now_chatObject+"è¯´ï¼š"+text2.getText()+"  "+now_Time.toString());
 				text1.setText(lists.get(now_chatObject).toString());
 				send("#name:"+now_chatObject+"#"+text2.getText()+"  "+now_Time.toString());
 				text2.setText("");
 			}
 		} 
-		else if (o == btn2) { //´«Êä°´Å¥
-			TransPane tp=new TransPane(" ¡ú "+now_chatObject);
+		else if (o == btn2) { //ä¼ è¾“æŒ‰é’®
+			TransPane tp=new TransPane(" â†’ "+now_chatObject);
 			File []fs=null;
 			
-			if(now_chatObject.equals("ÈºÏûÏ¢")){
+			if(now_chatObject.equals("ç¾¤æ¶ˆæ¯")){
 				//////////////////////////////////////////////////////////////////
 			}else{
 				JFileChooser chooser=new JFileChooser();
@@ -520,15 +520,15 @@ System.out.println("·şÎñÆ÷¶Ë½ÓÊÕµ½µÄ¶Ë¿ÚºÅÎª"+port);
 					fs=chooser.getSelectedFiles();
 					send("#trans:"+now_chatObject+"#"+fs.length);
 				}
-				tp.transServerPane("   µÈ´ı¶Ô·½½ÓÊÜÁ¬½Ó£¬ÇëÉÔºò......","È·¶¨","·şÎñÆ÷¶Ë",fs);
+				tp.transServerPane("   ç­‰å¾…å¯¹æ–¹æ¥å—è¿æ¥ï¼Œè¯·ç¨å€™......","ç¡®å®š","æœåŠ¡å™¨ç«¯",fs);
 			}
 			
 			arrTransPane.put(now_chatObject,tp);
 		} 
-		else if(o == btn3){//ÏÂÔØ°´Å¥
+		else if(o == btn3){//ä¸‹è½½æŒ‰é’®
 			//////////////////////////////////////////////////////////////////////
 		}
-		else if (o == cb1 || o == cb2 || o == cb3) {//×ÖÌå°´Å¥
+		else if (o == cb1 || o == cb2 || o == cb3) {//å­—ä½“æŒ‰é’®
 			String fontname = String.valueOf(cb1.getSelectedItem());
 			int style = cb2.getSelectedIndex();
 			int size = 6 + cb3.getSelectedIndex();
@@ -538,45 +538,45 @@ System.out.println("·şÎñÆ÷¶Ë½ÓÊÕµ½µÄ¶Ë¿ÚºÅÎª"+port);
 		}
 	}
 	/*
-	 * ÎÄ¼ş´«ÊäÀà
+	 * æ–‡ä»¶ä¼ è¾“ç±»
 	 */
 	public class Trans{
-		byte []buf=new byte[2048];//ÔİÊ±´æ´¢¶ÁÈë»ò¶Á³ö×Ö½ÚµÄÊı×é
-		int len=-1;//ÒÑ´«ËÍ³ö»ò½ÓÊÕµ½µÄ×Ö½ÚÊı
+		byte []buf=new byte[2048];//æš‚æ—¶å­˜å‚¨è¯»å…¥æˆ–è¯»å‡ºå­—èŠ‚çš„æ•°ç»„
+		int len=-1;//å·²ä¼ é€å‡ºæˆ–æ¥æ”¶åˆ°çš„å­—èŠ‚æ•°
 		
-		ServerSocket ss=null;//´«Êä¿Í»§¶ËµÄÁ¬½Ó
-		Socket s=null;//´«Êä¿Í»§¶Ë»ò·şÎñÆ÷¶ËµÄÁ¬½Ó
+		ServerSocket ss=null;//ä¼ è¾“å®¢æˆ·ç«¯çš„è¿æ¥
+		Socket s=null;//ä¼ è¾“å®¢æˆ·ç«¯æˆ–æœåŠ¡å™¨ç«¯çš„è¿æ¥
 		/*
-		 * ´«Êä¿Í»§¶ËÏà¹ØµÄÁ÷
+		 * ä¼ è¾“å®¢æˆ·ç«¯ç›¸å…³çš„æµ
 		 */
 		ObjectInputStream ois=null;
 		DataInputStream dis=null;
 		/*
-		 * ´«Êä·şÎñÆ÷¶ËÏà¹ØµÄÁ÷
+		 * ä¼ è¾“æœåŠ¡å™¨ç«¯ç›¸å…³çš„æµ
 		 */
 		ObjectOutputStream oos=null;
 		DataOutputStream dos=null;
 		
 		File []arrFile=null;
-		File []fOutputs=null;//Òª´«ËÍµÄÎÄ¼ş»òÎÄ¼ş¼Ğ
+		File []fOutputs=null;//è¦ä¼ é€çš„æ–‡ä»¶æˆ–æ–‡ä»¶å¤¹
 		File fOutput=new File("temp");
 		File fObj=null;
 		File fInput=null;
-		int fileNum=0;//ÒÑ´«ËÍ»ò½ÓÊÕµÄÎÄ¼şÊı
+		int fileNum=0;//å·²ä¼ é€æˆ–æ¥æ”¶çš„æ–‡ä»¶æ•°
 		
-		TransPane tp=null;//´«ËÍÃæ°å
+		TransPane tp=null;//ä¼ é€é¢æ¿
 		
-		String Id="";//´«ËÍ¿Í»§¶ËµØÖ·
-		int port=-1;//´«ËÍ¿Í»§¶Ë¿ªÆôµÄ¶Ë¿Ú
+		String Id="";//ä¼ é€å®¢æˆ·ç«¯åœ°å€
+		int port=-1;//ä¼ é€å®¢æˆ·ç«¯å¼€å¯çš„ç«¯å£
 		/*
-		 * ´«Êä¿Í»§¶Ë
+		 * ä¼ è¾“å®¢æˆ·ç«¯
 		 */
 		Trans(TransPane tp,File fInput){
 			this.tp=tp;
 			this.fInput=fInput;
 		}
 		/*
-		 * ´«Êä·şÎñÆ÷¶Ë
+		 * ä¼ è¾“æœåŠ¡å™¨ç«¯
 		 */
 		Trans(TransPane tp,File[] fOutputs,String Id,String port){
 			this.tp=tp;
@@ -585,7 +585,7 @@ System.out.println("·şÎñÆ÷¶Ë½ÓÊÕµ½µÄ¶Ë¿ÚºÅÎª"+port);
 			this.port=Integer.parseInt(port);
 		}
 		/*
-		 * ´«Êä¿Í»§¶ËÆô¶¯½ÓÊÜÁ¬½Ó
+		 * ä¼ è¾“å®¢æˆ·ç«¯å¯åŠ¨æ¥å—è¿æ¥
 		 */
 		public void transClientConnect(){
 			try {
@@ -598,7 +598,7 @@ System.out.println("·şÎñÆ÷¶Ë½ÓÊÕµ½µÄ¶Ë¿ÚºÅÎª"+port);
 			}
 		}
 		/*
-		 * ´«Êä·şÎñÆ÷¶ËÆô¶¯Á¬½Ó
+		 * ä¼ è¾“æœåŠ¡å™¨ç«¯å¯åŠ¨è¿æ¥
 		 */
 		public void transServerConnect(){
 			try {
@@ -612,7 +612,7 @@ System.out.println("·şÎñÆ÷¶Ë½ÓÊÕµ½µÄ¶Ë¿ÚºÅÎª"+port);
 			}
 		}
 		/*
-		 * ´«Êä¿Í»§¶Ë½ÓÊÕÊı¾İ
+		 * ä¼ è¾“å®¢æˆ·ç«¯æ¥æ”¶æ•°æ®
 		 */
 		public void transClient(File f){
 			File fObj=null;
@@ -628,7 +628,7 @@ System.out.println("·şÎñÆ÷¶Ë½ÓÊÕµ½µÄ¶Ë¿ÚºÅÎª"+port);
 				ex.printStackTrace();
 			}
 			/*
-			 * ½ÓÊÕÊı¾İ
+			 * æ¥æ”¶æ•°æ®
 			 */
 			if(fObj.getName().lastIndexOf(".")!=-1){
 				FileOutputStream fos=null;
@@ -657,7 +657,7 @@ System.out.println("·şÎñÆ÷¶Ë½ÓÊÕµ½µÄ¶Ë¿ÚºÅÎª"+port);
 					e.printStackTrace();
 				}
 					
-				tp.jl.setText("ÒÑ½ÓÊÕ"+(++fileNum)+"¸öÎÄ¼ş");
+				tp.jl.setText("å·²æ¥æ”¶"+(++fileNum)+"ä¸ªæ–‡ä»¶");
 			}else{
 				arrFile=fObj.listFiles();
 				new File(f,fObj.getName()).mkdir();
@@ -668,15 +668,15 @@ System.out.println("·şÎñÆ÷¶Ë½ÓÊÕµ½µÄ¶Ë¿ÚºÅÎª"+port);
 			}
 		}
 		/*
-		 * Æô¶¯ÎÄ¼ş´«Êä
+		 * å¯åŠ¨æ–‡ä»¶ä¼ è¾“
 		 */
 		public void launchTrans(){
 			for(int i=0;i<fOutputs.length;i++){
 				transServer(fOutputs[i]);
 			}
-			tp.jl.setText("×Ü¹²´«ËÍ"+fileNum+"¸öÎÄ¼ş");
+			tp.jl.setText("æ€»å…±ä¼ é€"+fileNum+"ä¸ªæ–‡ä»¶");
 			/*
-			 * ¹Ø±Õ¶Ë¿ÚºÍÁ÷
+			 * å…³é—­ç«¯å£å’Œæµ
 			 */
 			try {
 				s.close();
@@ -687,7 +687,7 @@ System.out.println("·şÎñÆ÷¶Ë½ÓÊÕµ½µÄ¶Ë¿ÚºÅÎª"+port);
 			}
 		}
 		/*
-		 * ´«Êä·şÎñÆ÷¶Ë·¢ËÍÊı¾İ
+		 * ä¼ è¾“æœåŠ¡å™¨ç«¯å‘é€æ•°æ®
 		 */
 		public void transServer(File fObj){
 			try {
@@ -719,7 +719,7 @@ System.out.println(fObj.getName());
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-				tp.jl.setText("ÒÑ´«ËÍ"+(++fileNum)+"¸öÎÄ¼ş");
+				tp.jl.setText("å·²ä¼ é€"+(++fileNum)+"ä¸ªæ–‡ä»¶");
 			}else{
 				arrFile=fObj.listFiles();
 				for(int i=0;i<arrFile.length;i++){
@@ -729,11 +729,11 @@ System.out.println(fObj.getName());
 		}
 	}
 	/*
-	 * ºÃÓÑÁĞ±í¼àÌıÀà
+	 * å¥½å‹åˆ—è¡¨ç›‘å¬ç±»
 	 */
 	class JListMouseAdapter extends MouseAdapter{
 		JFrame jf=new JFrame();
-		String name="¹ÜÀíÔ±ÏûÏ¢";
+		String name="ç®¡ç†å‘˜æ¶ˆæ¯";
 		int no=-1;
 		
 		JListMouseAdapter(JFrame jf){
@@ -743,13 +743,13 @@ System.out.println(fObj.getName());
 		public void mousePressed(MouseEvent me){
 			name=((JList)me.getSource()).getSelectedValue().toString();
 			
-			if(name.equals("ÈºÏûÏ¢")){
-				jf.setTitle("²é¿´"+name);
+			if(name.equals("ç¾¤æ¶ˆæ¯")){
+				jf.setTitle("æŸ¥çœ‹"+name);
 				text2.setEnabled(true);
 				btn2.setEnabled(true);
 			}
-			else if(name.equals("¹ÜÀíÔ±ÏûÏ¢")){
-				jf.setTitle("²é¿´"+name);
+			else if(name.equals("ç®¡ç†å‘˜æ¶ˆæ¯")){
+				jf.setTitle("æŸ¥çœ‹"+name);
 				text2.setEnabled(false);
 				btn2.setEnabled(false);
 			}
@@ -758,7 +758,7 @@ System.out.println(fObj.getName());
 					name=name.substring(0,name.length()-1);
 				}
 				no=arrName.indexOf(name);
-				jf.setTitle("Óë"+name+"ÁÄÌìÖĞ....");
+				jf.setTitle("ä¸"+name+"èŠå¤©ä¸­....");
 				text2.setEnabled(true);
 				btn2.setEnabled(true);
 				listmod.set(no,name);
@@ -771,7 +771,7 @@ System.out.println(fObj.getName());
 		}
 	}
 	/*
-	 * Ö÷Ãæ°å´°Ìå¹Ø±ÕÊÂ¼ş¼àÌıÀà
+	 * ä¸»é¢æ¿çª—ä½“å…³é—­äº‹ä»¶ç›‘å¬ç±»
 	 */
 	class PaneWindowAdapter extends WindowAdapter{
 		
@@ -789,7 +789,7 @@ System.out.println(fObj.getName());
 		}
 	}
 	/*
-	 * ´«ÊäÃæ°å
+	 * ä¼ è¾“é¢æ¿
 	 */
 	class TransPane extends JFrame implements ActionListener{
 		/**
@@ -807,12 +807,12 @@ System.out.println(fObj.getName());
 		
 		TransPane(String name){
 			setLayout(null);
-			setTitle("µØÆ½Ïß¿Í»§¶Ë´«Êä "+name);
+			setTitle("åœ°å¹³çº¿å®¢æˆ·ç«¯ä¼ è¾“ "+name);
 			setResizable(false);
 			this.name=name.substring(3);
 		}
 		/*
-		 * Æô¶¯´«Êä
+		 * å¯åŠ¨ä¼ è¾“
 		 */
 		public void startupTrans(String Id,String port){
 			Trans t=new Trans(this,fs,Id,port);
@@ -820,7 +820,7 @@ System.out.println(fObj.getName());
 			t.launchTrans();
 		}
 		/*
-		 * »æÖÆ´«Êä·şÎñÆ÷¶ËÃæ°å
+		 * ç»˜åˆ¶ä¼ è¾“æœåŠ¡å™¨ç«¯é¢æ¿
 		 */
 		public void transServerPane (String ltext,String btext,String obj,File[] fs) {
 			this.fs=fs;
@@ -837,7 +837,7 @@ System.out.println(fObj.getName());
 			setVisible(true);
 		}
 		/*
-		 * »æÖÆ´«Êä¿Í»§¶ËÃæ°å
+		 * ç»˜åˆ¶ä¼ è¾“å®¢æˆ·ç«¯é¢æ¿
 		 */
 		public void transClientPane (String ltext,String b1text,String b2text,String obj,int len) {
 			this.len=len;
@@ -857,12 +857,12 @@ System.out.println(fObj.getName());
 			setVisible(true);
 		}
 		/*
-		 * ´«ÊäÃæ°å×é¼ş¼àÌı
+		 * ä¼ è¾“é¢æ¿ç»„ä»¶ç›‘å¬
 		 */
 		public void actionPerformed(ActionEvent e) {
 			try
 			{
-				if(obj.equals("¿Í»§¶Ë")){
+				if(obj.equals("å®¢æˆ·ç«¯")){
 					if(e.getSource()==jbtn){
 						JFileChooser chooser=new JFileChooser();
 						chooser.setMultiSelectionEnabled(false);
@@ -870,14 +870,14 @@ System.out.println(fObj.getName());
 						int returVal=chooser.showOpenDialog(jbtn);
 						if(returVal==JFileChooser.APPROVE_OPTION){
 							f=chooser.getSelectedFile();
-							jl.setText("ÕıÔÚ´«Êä......");
+							jl.setText("æ­£åœ¨ä¼ è¾“......");
 							Trans t=new Trans(this,f);
 							send("#transId:"+name+"#"+clientId+"#"+(++transPort));
 							t.transClientConnect();
 							for(int i=0;i<len;i++){
 								t.transClient(f);
 							}
-							jl.setText("ÎÄ¼ş½ÓÊÕÍê±Ï£¬×Ü¹²½ÓÊÜ"+len+"¸öÎÄ¼ş");
+							jl.setText("æ–‡ä»¶æ¥æ”¶å®Œæ¯•ï¼Œæ€»å…±æ¥å—"+len+"ä¸ªæ–‡ä»¶");
 						}
 					}
 				}
@@ -890,7 +890,7 @@ System.out.println(fObj.getName());
 	}
 
 }
-/*==============¹ÜÀíÔ±Ãæ°å=====================*/
+/*==============ç®¡ç†å‘˜é¢æ¿=====================*/
 class ServerPane extends JFrame implements ActionListener{
 	/**
 	 * 
@@ -901,52 +901,52 @@ class ServerPane extends JFrame implements ActionListener{
 	DefaultListModel clientListmod = new DefaultListModel();
 	ClientThread ct=null;
 	String name="";
-	String now_chatObject="¹ÜÀíÔ±ÏûÏ¢";
+	String now_chatObject="ç®¡ç†å‘˜æ¶ˆæ¯";
 	int no=-1;
 	Time now_Time=null;
 	
-	StringBuffer serverChat=new StringBuffer("»¶Ó­ÄúÊ¹ÓÃµØÆ½ÏßÁÄÌìÈí¼ş£¡×÷Õß£ºÉÁ¿ÍÏÀ");
+	StringBuffer serverChat=new StringBuffer("æ¬¢è¿æ‚¨ä½¿ç”¨åœ°å¹³çº¿èŠå¤©è½¯ä»¶ï¼ä½œè€…ï¼šé—ªå®¢ä¾ ");
 	StringBuffer groupChat=new StringBuffer("");
 	
-	JTextPane text1 = new JTextPane();   //ÏûÏ¢ÏÔÊ¾¿ò
-	JTextPane text2 = new JTextPane();   //ÏûÏ¢ÊäÈë¿ò
-	JScrollPane sc1 = new JScrollPane(text1, 22, 32);//ÏûÏ¢ÏÔÊ¾¿òÈİÆ÷
-	JScrollPane sc2 = new JScrollPane(text2, 22, 32);//ÏûÏ¢ÊäÈë¿òÈİÆ÷
+	JTextPane text1 = new JTextPane();   //æ¶ˆæ¯æ˜¾ç¤ºæ¡†
+	JTextPane text2 = new JTextPane();   //æ¶ˆæ¯è¾“å…¥æ¡†
+	JScrollPane sc1 = new JScrollPane(text1, 22, 32);//æ¶ˆæ¯æ˜¾ç¤ºæ¡†å®¹å™¨
+	JScrollPane sc2 = new JScrollPane(text2, 22, 32);//æ¶ˆæ¯è¾“å…¥æ¡†å®¹å™¨
 	
-	JComboBox cb1 = null;//×ÖÌåÀàĞÍ
-	JComboBox cb2 = new JComboBox(new String[] { "³£¹æ", "´ÖÌå", "Ğ±Ìå", "´ÖĞ±Ìå" });
-	JComboBox cb3 = new JComboBox();//×ÖÌå´óĞ¡
+	JComboBox cb1 = null;//å­—ä½“ç±»å‹
+	JComboBox cb2 = new JComboBox(new String[] { "å¸¸è§„", "ç²—ä½“", "æ–œä½“", "ç²—æ–œä½“" });
+	JComboBox cb3 = new JComboBox();//å­—ä½“å¤§å°
 	
-	JList jlist = new JList(clientListmod);//ÓÃ»§ÁĞ±í¿ò
-	JScrollPane sc3 = new JScrollPane(jlist, 22, 32);//ÓÃ»§ÁĞ±í¿ò
+	JList jlist = new JList(clientListmod);//ç”¨æˆ·åˆ—è¡¨æ¡†
+	JScrollPane sc3 = new JScrollPane(jlist, 22, 32);//ç”¨æˆ·åˆ—è¡¨æ¡†
 	
-	JButton btn1 = new JButton("¹ã²¥");
-	JButton btn2 = new JButton("±íÇé");
-	JButton btn3 = new JButton("¶Ï¿ª");
+	JButton btn1 = new JButton("å¹¿æ’­");
+	JButton btn2 = new JButton("è¡¨æƒ…");
+	JButton btn3 = new JButton("æ–­å¼€");
 	
-	JSplitPane sp0= new JSplitPane(0);//ÉÏÁĞ
-	JSplitPane sp1= new JSplitPane(1);//ÓÒÁĞ
-	JSplitPane sp2= new JSplitPane(0);//ÏÂÁĞ
+	JSplitPane sp0= new JSplitPane(0);//ä¸Šåˆ—
+	JSplitPane sp1= new JSplitPane(1);//å³åˆ—
+	JSplitPane sp2= new JSplitPane(0);//ä¸‹åˆ—
 	
-	Font font = new Font("ËÎÌå", 1, 12);
+	Font font = new Font("å®‹ä½“", 1, 12);
 	Font[] font_array;
 	String[] font_name;
 
-	/* =================¹ÜÀíÔ±Ãæ°å¹¹Ôì·½·¨================= */
+	/* =================ç®¡ç†å‘˜é¢æ¿æ„é€ æ–¹æ³•================= */
 
 	ServerPane() {
 		/*
-		 * Æô¶¯Ïß³Ì
+		 * å¯åŠ¨çº¿ç¨‹
 		 */
 		ClientAddThread cat=new ClientAddThread();
 		ReceiveAddThread rat=new ReceiveAddThread();
 		cat.start();
 		rat.start();
 		/*
-		 * »æÖÆÃæ°å
+		 * ç»˜åˆ¶é¢æ¿
 		 */
 		setBounds(100, 200, 500, 500);
-		setTitle("µØÆ½ÏßÁÄÌìÈí¼ş·şÎñÆ÷¶Ë");
+		setTitle("åœ°å¹³çº¿èŠå¤©è½¯ä»¶æœåŠ¡å™¨ç«¯");
 		GraphicsEnvironment fm = GraphicsEnvironment
 				.getLocalGraphicsEnvironment();
 		font_name = fm.getAvailableFontFamilyNames();
@@ -991,27 +991,27 @@ class ServerPane extends JFrame implements ActionListener{
 		sp0.setOneTouchExpandable(true);
 		sp1.setOneTouchExpandable(true);
 		jlist.addMouseListener(new JListMouseAdapter(this));
-		clientListmod.add(clientListmod.size(), "ÈºÏûÏ¢");
-		clientListmod.add(clientListmod.size(),"¹ÜÀíÔ±ÏûÏ¢");
+		clientListmod.add(clientListmod.size(), "ç¾¤æ¶ˆæ¯");
+		clientListmod.add(clientListmod.size(),"ç®¡ç†å‘˜æ¶ˆæ¯");
 		addWindowListener(new serverPaneWindowAdapter());
-		text1.setText("»¶Ó­ÄúÊ¹ÓÃµØÆ½ÏßÁÄÌìÈí¼ş£¡×÷Õß£ºÉÁ¿ÍÏÀ");
+		text1.setText("æ¬¢è¿æ‚¨ä½¿ç”¨åœ°å¹³çº¿èŠå¤©è½¯ä»¶ï¼ä½œè€…ï¼šé—ªå®¢ä¾ ");
 	}
 	
 	/*
-	 *¹ÜÀíÔ±Ãæ°å×é¼şµÄÊÂ¼ş¼àÌıÆ÷ 
+	 *ç®¡ç†å‘˜é¢æ¿ç»„ä»¶çš„äº‹ä»¶ç›‘å¬å™¨ 
 	 */
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
 		
 		if (o == btn1) {
 			now_Time=new Time(System.currentTimeMillis());
-			if(now_chatObject.equals("ÈºÏûÏ¢")){
-				groupChat.append("\n\n¹ÜÀíÔ±:"+text2.getText()+"  "+now_Time.toString());
+			if(now_chatObject.equals("ç¾¤æ¶ˆæ¯")){
+				groupChat.append("\n\nç®¡ç†å‘˜:"+text2.getText()+"  "+now_Time.toString());
 				text1.setText(groupChat.toString());
 				
 				for(int i=0;i<clientLists.size();i++){
 					ct=clientLists.get(arrClientName.get(i));
-					ct.send("#group:"+"¹ÜÀíÔ±#"+text2.getText()+"  "+now_Time.toString());
+					ct.send("#group:"+"ç®¡ç†å‘˜#"+text2.getText()+"  "+now_Time.toString());
 				}
 			}
 			else{
@@ -1029,13 +1029,13 @@ class ServerPane extends JFrame implements ActionListener{
 			/////////////////////////////////////////////////////////////////	
 		} else if(o == btn3){
 			name=clientListmod.get(no).toString();
-			if(!name.equals("")&&!name.equals("ÈºÏûÏ¢")&&!name.equals("¹ÜÀíÔ±ÏûÏ¢")){
-				if(btn3.getText().equals("Á¬½Ó")){
+			if(!name.equals("")&&!name.equals("ç¾¤æ¶ˆæ¯")&&!name.equals("ç®¡ç†å‘˜æ¶ˆæ¯")){
+				if(btn3.getText().equals("è¿æ¥")){
 					clientListmod.set(no,arrClientName.get(no-2));
-					btn3.setText("¶Ï¿ª");
+					btn3.setText("æ–­å¼€");
 				}else{
 					clientListmod.set(no, name+"*");
-					btn3.setText("Á¬½Ó");
+					btn3.setText("è¿æ¥");
 				}
 			}
 			
@@ -1049,7 +1049,7 @@ class ServerPane extends JFrame implements ActionListener{
 		}
 	}
 	/*
-	 * ¼àÌıĞÂ¿Í»§¶Ë
+	 * ç›‘å¬æ–°å®¢æˆ·ç«¯
 	 */
 	class ClientAddThread extends Thread{
 		byte [] buf=new byte[1024];
@@ -1069,7 +1069,7 @@ class ServerPane extends JFrame implements ActionListener{
 				id=InetAddress.getLocalHost().toString();
 				id=id.substring(id.lastIndexOf("/")+1);
 			}catch(UnknownHostException uhe){
-				System.out.println("±¾µØ·şÎñÆ÷µØÖ·»ñÈ¡Ê§°Ü");
+				System.out.println("æœ¬åœ°æœåŠ¡å™¨åœ°å€è·å–å¤±è´¥");
 				uhe.printStackTrace();
 			}
 			
@@ -1077,7 +1077,7 @@ class ServerPane extends JFrame implements ActionListener{
 				dgs=new DatagramSocket(3000);
 				dgs2=new DatagramSocket(3030);
 			}catch(IOException ie){
-				System.out.println("·şÎñÆ÷¶Ë¼àÌıĞÂÓÃ»§µÄ¶Ë¿Ú¿ªÆôÊ§°Ü");
+				System.out.println("æœåŠ¡å™¨ç«¯ç›‘å¬æ–°ç”¨æˆ·çš„ç«¯å£å¼€å¯å¤±è´¥");
 				ie.printStackTrace();
 			}
 			
@@ -1085,7 +1085,7 @@ class ServerPane extends JFrame implements ActionListener{
 				try {
 					dgs.receive(dp);
 				} catch (IOException e) {
-					System.out.println("·şÎñÆ÷Í¨µÀÎŞ·¨½ÓÊÕÏûÏ¢");
+					System.out.println("æœåŠ¡å™¨é€šé“æ— æ³•æ¥æ”¶æ¶ˆæ¯");
 					e.printStackTrace();
 				}
 				
@@ -1101,7 +1101,7 @@ class ServerPane extends JFrame implements ActionListener{
 						dp2=new DatagramPacket(buf2,buf2.length,new InetSocketAddress(clientId,2020));
 						dgs2.send(dp2);
 					} catch (IOException ie) {
-						System.out.println("Í¨µÀÎ´½¨Á¢");
+						System.out.println("é€šé“æœªå»ºç«‹");
 						ie.printStackTrace();
 					}
 				}else{
@@ -1111,7 +1111,7 @@ class ServerPane extends JFrame implements ActionListener{
 						dp2=new DatagramPacket(buf2,buf2.length,new InetSocketAddress(clientId,2020));
 						dgs2.send(dp2);
 					}catch(IOException ie){
-						System.out.println("Á¬½ÓÎŞ·¨½¨Á¢");
+						System.out.println("è¿æ¥æ— æ³•å»ºç«‹");
 						ie.printStackTrace();
 					}
 				}
@@ -1119,7 +1119,7 @@ class ServerPane extends JFrame implements ActionListener{
 		}
 	}
 	/*
-	 * ½ÓÊÜ¿Í»§¶Ë¼ÓÈë
+	 * æ¥å—å®¢æˆ·ç«¯åŠ å…¥
 	 */
 	class ReceiveAddThread extends Thread{
 		ServerSocket ss =null;
@@ -1180,7 +1180,7 @@ class ServerPane extends JFrame implements ActionListener{
 		}
 	}
 	/*
-	 * ¿Í»§¶ËÏß³Ì½Ó·¢ÏûÏ¢
+	 * å®¢æˆ·ç«¯çº¿ç¨‹æ¥å‘æ¶ˆæ¯
 	 */
 	class ClientThread extends Thread{
 		Socket s=null;
@@ -1203,7 +1203,7 @@ class ServerPane extends JFrame implements ActionListener{
 			}
 		}
 		/*
-		 * ½ÓÊÕÏûÏ¢
+		 * æ¥æ”¶æ¶ˆæ¯
 		 */
 		public void run(){
 			String name="";
@@ -1232,8 +1232,8 @@ class ServerPane extends JFrame implements ActionListener{
 				
 				if(ins.indexOf("#group:")!=-1){
 					ins=ins.substring(7);
-					groupChat.append("\n\n"+myName+"Ëµ£º"+ins);
-					if(now_chatObject.equals("ÈºÏûÏ¢")){
+					groupChat.append("\n\n"+myName+"è¯´ï¼š"+ins);
+					if(now_chatObject.equals("ç¾¤æ¶ˆæ¯")){
 						text1.setText(groupChat.toString());
 					}
 					
@@ -1281,7 +1281,7 @@ class ServerPane extends JFrame implements ActionListener{
 			
 		}
 		/*
-		 * ·¢ËÍÏûÏ¢
+		 * å‘é€æ¶ˆæ¯
 		 */
 		public void send(String ins){
 			try {
@@ -1292,7 +1292,7 @@ class ServerPane extends JFrame implements ActionListener{
 		}
 	}
 	/*
-	 * ºÃÓÑÁĞ±í¼àÌıÀà
+	 * å¥½å‹åˆ—è¡¨ç›‘å¬ç±»
 	 */
 	class JListMouseAdapter extends MouseAdapter{
 		JFrame jf=new JFrame();
@@ -1304,30 +1304,30 @@ class ServerPane extends JFrame implements ActionListener{
 		public void mousePressed(MouseEvent me){
 			name=((JList)me.getSource()).getSelectedValue().toString();
 			no=((JList)me.getSource()).getSelectedIndex();
-			if(name.equalsIgnoreCase("ÈºÏûÏ¢")){
-				jf.setTitle("²é¿´"+name);
+			if(name.equalsIgnoreCase("ç¾¤æ¶ˆæ¯")){
+				jf.setTitle("æŸ¥çœ‹"+name);
 				text1.setText(groupChat.toString());
-				now_chatObject="ÈºÏûÏ¢";
+				now_chatObject="ç¾¤æ¶ˆæ¯";
 				btn3.setEnabled(false);
 			}
-			else if(name.equalsIgnoreCase("¹ÜÀíÔ±ÏûÏ¢")){
-				jf.setTitle("²é¿´"+name);
+			else if(name.equalsIgnoreCase("ç®¡ç†å‘˜æ¶ˆæ¯")){
+				jf.setTitle("æŸ¥çœ‹"+name);
 				text1.setText(serverChat.toString());
-				now_chatObject="¹ÜÀíÔ±ÏûÏ¢";
+				now_chatObject="ç®¡ç†å‘˜æ¶ˆæ¯";
 				btn3.setEnabled(false);
 			}
 			else{
 				btn3.setEnabled(true);
 				if(name.indexOf("*")!=-1){
-					btn3.setText("Á¬½Ó");/////////////////////////////////////////////////////////////////////////////////
+					btn3.setText("è¿æ¥");/////////////////////////////////////////////////////////////////////////////////
 				}else{
-					btn3.setText("¶Ï¿ª");
+					btn3.setText("æ–­å¼€");
 				}
 			}
 		}
 	}
 	/*
-	 * ¹ÜÀíÔ±Ãæ°å´°Ìå¹Ø±ÕÊÂ¼ş¼àÌıÀà
+	 * ç®¡ç†å‘˜é¢æ¿çª—ä½“å…³é—­äº‹ä»¶ç›‘å¬ç±»
 	 */
 	class serverPaneWindowAdapter extends WindowAdapter{
 		ClientThread ct=null;
